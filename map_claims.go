@@ -1,115 +1,36 @@
 package jwt
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
-// MapClaims is a claims type that uses the map[string]any for JSON
-// decoding. This is the default claims type if you don't supply one
 type MapClaims map[string]any
 
-// GetExpirationTime implements the Claims interface.
 func (m MapClaims) GetExpirationTime() (*NumericDate, error) {
-	return m.parseNumericDate("exp")
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-// GetNotBefore implements the Claims interface.
-func (m MapClaims) GetNotBefore() (*NumericDate, error) {
-	return m.parseNumericDate("nbf")
-}
+func (m MapClaims) GetNotBefore() (*NumericDate, error) { _ = "STUB: not implemented"; return nil, nil }
 
-// GetIssuedAt implements the Claims interface.
-func (m MapClaims) GetIssuedAt() (*NumericDate, error) {
-	return m.parseNumericDate("iat")
-}
+func (m MapClaims) GetIssuedAt() (*NumericDate, error) { _ = "STUB: not implemented"; return nil, nil }
 
-// GetAudience implements the Claims interface.
 func (m MapClaims) GetAudience() (ClaimStrings, error) {
-	return m.parseClaimsString("aud")
+	_ = "STUB: not implemented"
+	return *new(ClaimStrings), nil
 }
 
-// GetIssuer implements the Claims interface.
-func (m MapClaims) GetIssuer() (string, error) {
-	return m.parseString("iss")
-}
+func (m MapClaims) GetIssuer() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-// GetSubject implements the Claims interface.
-func (m MapClaims) GetSubject() (string, error) {
-	return m.parseString("sub")
-}
+func (m MapClaims) GetSubject() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-// parseNumericDate tries to parse a key in the map claims type as a number
-// date. This will succeed, if the underlying type is either a [float64] or a
-// [json.Number]. Otherwise, nil will be returned.
 func (m MapClaims) parseNumericDate(key string) (*NumericDate, error) {
-	v, ok := m[key]
-	if !ok {
-		return nil, nil
-	}
-
-	switch exp := v.(type) {
-	case float64:
-		return newNumericDateFromSeconds(exp), nil
-	case json.Number:
-		v, _ := exp.Float64()
-
-		return newNumericDateFromSeconds(v), nil
-	}
-
-	return nil, newError(fmt.Sprintf("%s is invalid", key), ErrInvalidType)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-// parseClaimsString tries to parse a key in the map claims type as a
-// [ClaimsStrings] type, which can either be a string or an array of string.
 func (m MapClaims) parseClaimsString(key string) (ClaimStrings, error) {
-	var cs []string
-	switch v := m[key].(type) {
-	case string:
-		cs = append(cs, v)
-	case []string:
-		cs = v
-	case []any:
-		for _, a := range v {
-			vs, ok := a.(string)
-			if !ok {
-				return nil, newError(fmt.Sprintf("%s is invalid", key), ErrInvalidType)
-			}
-			cs = append(cs, vs)
-		}
-	case nil:
-		// The claim is either absent or explicitly null. As the claim is
-		// optional, this is not an error and means "no value".
-		return nil, nil
-	default:
-		// Any other type (e.g. a number, boolean or object) is invalid, which
-		// is reported as an error to stay consistent with the other accessors
-		// such as parseString and parseNumericDate, as well as with the
-		// per-element type check performed on []any audiences above.
-		return nil, newError(fmt.Sprintf("%s is invalid", key), ErrInvalidType)
-	}
-
-	return cs, nil
+	_ = "STUB: not implemented"
+	return *new(ClaimStrings), nil
 }
 
-// parseString tries to parse a key in the map claims type as a [string] type.
-// If the key does not exist, an empty string is returned. If the key has the
-// wrong type, an error is returned.
 func (m MapClaims) parseString(key string) (string, error) {
-	var (
-		ok  bool
-		raw any
-		iss string
-	)
-	raw, ok = m[key]
-	if !ok {
-		return "", nil
-	}
-
-	iss, ok = raw.(string)
-	if !ok {
-		return "", newError(fmt.Sprintf("%s is invalid", key), ErrInvalidType)
-	}
-
-	return iss, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
