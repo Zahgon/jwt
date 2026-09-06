@@ -3,67 +3,31 @@ package test
 import (
 	"crypto"
 	"crypto/rsa"
-	"os"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
 func LoadRSAPrivateKeyFromDisk(location string) *rsa.PrivateKey {
-	keyData, e := os.ReadFile(location)
-	if e != nil {
-		panic(e.Error())
-	}
-	key, e := jwt.ParseRSAPrivateKeyFromPEM(keyData)
-	if e != nil {
-		panic(e.Error())
-	}
-	return key
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func LoadRSAPublicKeyFromDisk(location string) *rsa.PublicKey {
-	keyData, e := os.ReadFile(location)
-	if e != nil {
-		panic(e.Error())
-	}
-	key, e := jwt.ParseRSAPublicKeyFromPEM(keyData)
-	if e != nil {
-		panic(e.Error())
-	}
-	return key
+	_ = "STUB: not implemented"
+	return nil
 }
 
-// MakeSampleToken creates and returns a encoded JWT token that has been signed with the specified cryptographic key.
 func MakeSampleToken(c jwt.Claims, method jwt.SigningMethod, key any) string {
-	token := jwt.NewWithClaims(method, c)
-	s, e := token.SignedString(key)
-
-	if e != nil {
-		panic(e.Error())
-	}
-
-	return s
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func LoadECPrivateKeyFromDisk(location string) crypto.PrivateKey {
-	keyData, e := os.ReadFile(location)
-	if e != nil {
-		panic(e.Error())
-	}
-	key, e := jwt.ParseECPrivateKeyFromPEM(keyData)
-	if e != nil {
-		panic(e.Error())
-	}
-	return key
+	_ = "STUB: not implemented"
+	return *new(crypto.PrivateKey)
 }
 
 func LoadECPublicKeyFromDisk(location string) crypto.PublicKey {
-	keyData, e := os.ReadFile(location)
-	if e != nil {
-		panic(e.Error())
-	}
-	key, e := jwt.ParseECPublicKeyFromPEM(keyData)
-	if e != nil {
-		panic(e.Error())
-	}
-	return key
+	_ = "STUB: not implemented"
+	return *new(crypto.PublicKey)
 }

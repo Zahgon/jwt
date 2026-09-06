@@ -7,43 +7,17 @@ import (
 var signingMethods = map[string]func() SigningMethod{}
 var signingMethodLock = new(sync.RWMutex)
 
-// SigningMethod can be used add new methods for signing or verifying tokens. It
-// takes a decoded signature as an input in the Verify function and produces a
-// signature in Sign. The signature is then usually base64 encoded as part of a
-// JWT.
 type SigningMethod interface {
-	Verify(signingString string, sig []byte, key any) error // Returns nil if signature is valid
-	Sign(signingString string, key any) ([]byte, error)     // Returns signature or error
-	Alg() string                                            // returns the alg identifier for this method (example: 'HS256')
+	Verify(signingString string, sig []byte, key any) error
+	Sign(signingString string, key any) ([]byte, error)
+	Alg() string
 }
 
-// RegisterSigningMethod registers the "alg" name and a factory function for signing method.
-// This is typically done during init() in the method's implementation
-func RegisterSigningMethod(alg string, f func() SigningMethod) {
-	signingMethodLock.Lock()
-	defer signingMethodLock.Unlock()
+func RegisterSigningMethod(alg string, f func() SigningMethod) { _ = "STUB: not implemented"; return }
 
-	signingMethods[alg] = f
-}
-
-// GetSigningMethod retrieves a signing method from an "alg" string
 func GetSigningMethod(alg string) (method SigningMethod) {
-	signingMethodLock.RLock()
-	defer signingMethodLock.RUnlock()
-
-	if methodF, ok := signingMethods[alg]; ok {
-		method = methodF()
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(SigningMethod)
 }
 
-// GetAlgorithms returns a list of registered "alg" names
-func GetAlgorithms() (algs []string) {
-	signingMethodLock.RLock()
-	defer signingMethodLock.RUnlock()
-
-	for alg := range signingMethods {
-		algs = append(algs, alg)
-	}
-	return
-}
+func GetAlgorithms() (algs []string) { _ = "STUB: not implemented"; return nil }

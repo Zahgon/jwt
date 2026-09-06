@@ -2,8 +2,6 @@ package jwt
 
 import (
 	"errors"
-	"fmt"
-	"strings"
 )
 
 var (
@@ -25,65 +23,17 @@ var (
 	ErrInvalidType               = errors.New("invalid type for claim")
 )
 
-// joinedError is an error type that works similar to what [errors.Join]
-// produces, with the exception that it has a nice error string; mainly its
-// error messages are concatenated using a comma, rather than a newline.
 type joinedError struct {
 	errs []error
 }
 
-func (je joinedError) Error() string {
-	msg := []string{}
-	for _, err := range je.errs {
-		msg = append(msg, err.Error())
-	}
+func (je joinedError) Error() string { _ = "STUB: not implemented"; return "" }
 
-	return strings.Join(msg, ", ")
-}
+func joinErrors(errs ...error) error { _ = "STUB: not implemented"; return nil }
 
-// joinErrors joins together multiple errors. Useful for scenarios where
-// multiple errors next to each other occur, e.g., in claims validation.
-func joinErrors(errs ...error) error {
-	return &joinedError{
-		errs: errs,
-	}
-}
+func (je joinedError) Unwrap() []error { _ = "STUB: not implemented"; return nil }
 
-// Unwrap implements the multiple error unwrapping for this error type, which is
-// possible in Go 1.20.
-func (je joinedError) Unwrap() []error {
-	return je.errs
-}
-
-// newError creates a new error message with a detailed error message. The
-// message will be prefixed with the contents of the supplied error type.
-// Additionally, more errors, that provide more context can be supplied which
-// will be appended to the message. This makes use of Go 1.20's possibility to
-// include more than one %w formatting directive in [fmt.Errorf].
-//
-// For example,
-//
-//	newError("no keyfunc was provided", ErrTokenUnverifiable)
-//
-// will produce the error string
-//
-//	"token is unverifiable: no keyfunc was provided"
 func newError(message string, err error, more ...error) error {
-	var format string
-	var args []any
-	if message != "" {
-		format = "%w: %s"
-		args = []any{err, message}
-	} else {
-		format = "%w"
-		args = []any{err}
-	}
-
-	for _, e := range more {
-		format += ": %w"
-		args = append(args, e)
-	}
-
-	err = fmt.Errorf(format, args...)
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
